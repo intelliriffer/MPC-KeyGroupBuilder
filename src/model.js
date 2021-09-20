@@ -242,8 +242,10 @@ processWavs = function ($path, $mode) {
             }
         }
         else {
-            root = getNoteNumber(v, $mode) + 1;
-            if (root == -1) root = 61 //set root to c5;
+            root = getNoteNumber(v, $mode);
+
+            if (root == -1) root = 60 //set root to c5;
+            root += 1;
         }
 
         let wav = {
