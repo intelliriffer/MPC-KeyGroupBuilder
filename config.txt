@@ -24,8 +24,16 @@
 # MULTI /volumes/myfolder/multisamples*       (All sub-folders will be converted each into a  separate key-group from samples contained in the sub folder)
 #The Options line below is used to specifiy some global options (separated by space as follows) 
 #   SCW_WRITE_SMPL_CHUNK : will generate a SMPL meta info and Akai atemp meta chunk and will add it to SCW wav file. SMPL chunk contains Pitch as well as sample loop point.
+#   PREFER_WAV_EMBEDDED_ROOT : Will ignore the note number specified in file name and use the value embedded in the wav file smpl chunk (useful when samples are coming from another sampler or soundfont)
 
+#****************************************************************************************************************************************
 #OPTIONS SCW_WRITE_SMPL_CHUNK
+#****************************************************************************************************************************************
 
-#enter the conversion commands below this line (each line for a different folder and command)
- 
+#****************************************************************************************************************************************
+#Enter the conversion commands below this line (each line for a different folder and mode)
+#****************************************************************************************************************************************
+
+MULTIS /Volumes/EX3/my.force/converts/multisamples*
+#SINGLES /Volumes/EX3/my.force/converts/SINGLES
+#SCW /Volumes/EX3/my.force/converts/SCW*

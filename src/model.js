@@ -20,7 +20,8 @@ const MODEL = {
 
     },
     OPTIONS: {
-        SCW_WRITE_SMPL_CHUNK: false
+        SCW_WRITE_SMPL_CHUNK: false,
+        PREFER_WAV_EMBEDDED_ROOT: false
 
     }
     ,
@@ -81,6 +82,7 @@ const MODEL = {
 
 function SaveMultisampleKeygroup(wData) {
     let count = wData.length;
+    if (!count) return;
     let odata = '';
     let name = path.basename(path.dirname(wData[0].FILE));
     let fn = path.join(path.dirname(wData[0].FILE), name + ' - KG.xpm');
@@ -239,9 +241,13 @@ processWavs = function ($path, $mode) {
             }
         }
         else {
-            root = getNoteNumber(v, $mode);
-
-            if (root == -1) root = 60 //set root to c5;
+            let root = -1 //failure
+            if (WINFO.hasSMPL) {
+                root = WINFO.SMPL.MIDINOTE;
+            }
+            let file_root = getNoteNumber(v, $mode);
+            root = selectRoot(root, file_root);
+            if (root == -1) root = 60;
             root += 1;
         }
 
@@ -263,20 +269,40 @@ processWavs = function ($path, $mode) {
     //waves[ix].WINFO = WAVF.read(v.FILE, false);
 
 }
+function selectRoot(SMPL, FILE) {
+    if (FILE == -1 || (MODEL.OPTIONS.PREFER_WAV_EMBEDDED_ROOT && SMPL != -1)) {
+        if (SMPL != -1) console.log(`           << Using Embedded root: [${SMPL}] from Sample`);
+        return SMPL;
+    }
+    return FILE;
+}
 
 function getMultiSamples($path, $mode) {
     let waves = fs.readdirSync($path).map(n => path.join($path, n)).filter(v => {
         return helpers.isFile(v) && isWavNamed(v);
     });
 
-
-    waves = waves.map(v => {
+    waves = waves.map((v, ix) => {
         let match = /\.[Ww][Aa][Vv]$/.exec(v);
         let wFile = path.basename(v, match[0]);
+        let last = waves.length - 1;
+        log('GREEN', ` <<< Reading MultiSammple [${ix + 1} of ${last + 1}]  <<< ${wFile}`)
+        let root = -1 //failure
+        let WINFO = WAVF.read(v, false);
+        if (WINFO.hasSMPL) {
+            root = WINFO.SMPL.MIDINOTE;
+        }
+        let file_root = getNoteNumber(v, $mode);
+        root = selectRoot(root, file_root);
 
-        let root = getNoteNumber(v, $mode);
-        if (root == -1) root = 60 //set root to c5;
+        /**
+         * 
+         *  let file_root = getNoteNumber(v, $mode);
+                    root = selectRoot(root, file_root);
+                    if (root == -1) root = 60;
+         *  */
 
+        //root += 1;
         let wav = {
             FILE: v,
             SAMPLE: wFile,
@@ -286,14 +312,15 @@ function getMultiSamples($path, $mode) {
             HI: 127,
             CENTS: 0,
             MULTI: true,
+            WINFO: WINFO
         }
         wav.SKIP = wav.ROOT < 0;
-        if (wav.SKIP) log('ERROR', ` SKIPPED >> Sample Name does not Define Key in End >>> ${v} `);
+        if (wav.SKIP) log('ERROR', ` SKIPPED >> Key Note Defined in Name End or Sample >>> ${v} `);
         return wav;
     }).filter(v => !v.SKIP);
 
     waves.sort((a, b) => { return a.ROOT - b.ROOT });
-    let last = waves.length - 1;
+    last = waves.length - 1;
 
     waves.forEach((v, ix) => {
         if (ix < last) {
@@ -302,9 +329,7 @@ function getMultiSamples($path, $mode) {
         if (ix == 0) {
             waves[ix].LO = 0;
         }
-        log('GREEN', ` <<< Reading Sample [${ix + 1} of ${last + 1}]  <<< ${v.SAMPLE}`)
 
-        waves[ix].WINFO = WAVF.read(v.FILE, false);
     });
 
     return waves;
