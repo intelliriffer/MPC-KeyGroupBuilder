@@ -48,6 +48,11 @@
 >   
 > It is up to you to organize and provide correct names / pitches for your samples.  
 > The Same Naming Convention Rule Apply of SINGLES, just that the folder will contain different Samples each resulting in a new key-group file.
+> &nbsp;  
+> If the filename does not contain pitch infomation, but the wav file has that embedded in it, it will try to use that. You can force it to always use embedded by adding PREFER_WAV_EMBEDDED_ROOT to the line starting with #OPTIONS in the config.txt file.
+
+
+
 
 ##  Usage/ Instructions
 1.   Organize your Samples to convert into Folders and give them proper names and check that they have their pitches in the end of filename as described in the section above.  
