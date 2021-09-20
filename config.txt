@@ -1,5 +1,5 @@
 # Amit's Key-group Builder scripts ###############
-# please note lines starting by # are comments except the #OPTIONS line which is used to set OPTIONS.
+# please note lines starting by # are comments except the # OPTIONS line which is used to set OPTIONS.
 # WARNING: Each Key-group File (.xpm is about 905 KB (1MB)) so use judiciously.
 
 # Command Format

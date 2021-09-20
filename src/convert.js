@@ -15,6 +15,7 @@ if (!isFile($config)) ANSI.XERROR('Error! ==> Config.txt Not Found!!');
 let fdata = fs.readFileSync($config).toString();
 let files = fdata.split("\n").filter(v => { return v.trim() != '' && !v.trim().startsWith('#') });
 let options = /#OPTIONS (.*)/.exec(fdata);
+
 if (options) {
     let odata = options[1].trim().replaceAll(/\s+/g, ' ').split(' ');
     Object.keys(model.OPTIONS).forEach(k => {

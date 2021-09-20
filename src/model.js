@@ -233,7 +233,7 @@ processWavs = function ($path, $mode) {
             root = P.ROOT + 1;
             $CENTS = P.CENTS;
             if (MODEL.OPTIONS.SCW_WRITE_SMPL_CHUNK) {
-                let smpl = WAVF.createSMPLChunk(root - 1, $CENTS, 0, WINFO.numsamples - 1);
+                let smpl = WAVF.createSMPLChunk(root, $CENTS, 0, WINFO.numsamples - 1);
                 let akai = WAVF.createAkaiChunk(0, WINFO.numsamples - 1, 0, 1);
                 let chunk = smpl.concat(akai);
                 WAVF.write(v, WINFO.channels, WINFO.format, WINFO.samplerate, WINFO.depth, WINFO.data, chunk);
