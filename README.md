@@ -38,16 +38,16 @@
 
 3.  ##  MULTIS - Multi-Sample Mode
     Multi-samples are multiple Samples of an instrument taken at different pitches. in MULTIS mode each folder is considered to be a single instrument and all wav files in the folder to be multi-Samples. The name of Key-group is the name of the Multi-Sample Folder. The Pitch (root note) of each Sample is Determined by its Filename. ***see the box below about file naming. 
-    for example if you multi-Sample folder is  : specialflue , each wav file in the folder should have correct pitch number (0-127) or C3,B4,F#5 in the end with space or dash before that. like specialflute 36.wav,specialflute-40.wav etc or specialflute C3.wav,specialflute-F#3.wav etc.. It is up to you to provide correct names / pitches for your samples.
+    for example if you multi-Sample folder is  : special-flute , each wav file in the folder should have correct pitch number (0-127) or C3,B4,F#5 in the end with space or dash before that. like special-flute 36.wav,special-flute-40.wav etc or special-flute C3.wav,special-flute-F#3.wav etc.. It is up to you to provide correct names / pitches for your samples.
 
 > ## *** SAMPLE Naming Scheme for SINGLES and MULTIS***
-> Assuming your multi-Sample folder is named:specialflue , each wav file in the folder should have correct pitch number (0-127) or C3,B4,F#5 in the end of the filename with space or dash before that. 
-> Examples: specialflute 36.wav,specialflute-40.wav etc or,  
+> Assuming your multi-Sample folder is named:special-flute , each wav file in the folder should have correct pitch number (0-127) or C3,B4,F#5 in the end of the filename with space or dash before that. 
+> Examples: special-flute 36.wav,special-flute-40.wav etc or,  
 > 
-> specialflute C3.wav,specialflute-F#3.wav etc..  
+> special-flute C3.wav,special-flute-F#3.wav etc..  
 >   
 > It is up to you to organize and provide correct names / pitches for your samples.  
-> The Same Naming Convention Rule Apply of SINGLES, just that the folder can contains different Samples
+> The Same Naming Convention Rule Apply of SINGLES, just that the folder will contain different Samples each resulting in a new key-group file.
 
 ##  Usage/ Instructions
 1.   Organize your Samples to convert into Folders and give them proper names and check that they have their pitches in the end of filename as described in the section above.  
