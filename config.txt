@@ -1,21 +1,21 @@
 # Amit's Keygroup Builder v 1.0 scripts ###############
 # please note lines started by # are comments
-# WARNING: Each Keygroup File (.xpm is about 905 KB (1MB)) so use judiciously.
+# WARNING: Each Key-group File (.xpm is about 905 KB (1MB)) so use judiciously.
 
 # Command Format
 #  MODE Path
 #path is full path containing the wav files to create keygroups from
 #Modes are as listed below
-# SCW : The Provided Folders Contains Single Cycle waveforms and a Keygoup file will be created for each wave file and Root Note will be determined from the number of samples contained and will loop.
-# MULTI : The Path Folder will be considered as containing multisamples for a single Patch, The Wave filenemes must end with Either Exact Note Number (00-96) or NoteName (C0, E5, C6 , B-2 etc) 
+# SCW : The Provided Folders Contains Single Cycle waveforms and a Key-group file will be created for each wave file and Root Note will be determined from the number of samples contained and will loop.
+# MULTI : The Path Folder will be considered as containing multi-samples for a single Patch, The Wave filenames must end with Either Exact Note Number (00-96) or NoteName (C0, E5, C6 , B-2 etc) 
 #         Example file names required for multi mode : myflute 36.wav, myflute C3.wav, or myflute-36.wav, myflute-C3.wav (both spaces and hyphens allowed, use either one).
-#         if you need your sample to loop, do so in an audio editor that lets you define loopmpojts or do it one by one in force or MPC App.
-#         The Keygroup will Take the Name of the Folder.
-# SINGLES : Each Wav file in the path Folder will be considered a separate sample and a keygroup will be created for each, mapping it across the keyboard
+#         if you need your sample to loop, do so in an audio editor that lets you define loop points or do it one by one in force or MPC App.
+#         The Key-group will Take the Name of the Folder.
+# SINGLES : Each Wav file in the path Folder will be considered a separate sample and a key-group will be created for each, mapping it across the keyboard
 #           if the wave file ends with Note Number or Note name, that will be used as the root of the sample. for example myFlute 00.wav or myFlute-E3.wav
-#           The Name of the Keygroup will be same as the wave file.
+#           The Name of the Key-group will be same as the wave file.
 #
-# if you add a * in end of path, then all subfolders under the path will be processed, for converting large collections.
+# if you add a * in end of path, then all sub-folders under the path will be processed, for converting large collections.
 # Example Commands 
 # SCW /volumes/myfolder/singlecycleswavs  (mac/linux style)
 # MULTI d:\mywavs\multisamples\myflute
