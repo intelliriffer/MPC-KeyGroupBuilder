@@ -28,4 +28,3 @@
 #OPTIONS SCW_WRITE_SMPL_CHUNK
 
 #enter the conversion commands below this line (each line for a different folder and command)
- 
