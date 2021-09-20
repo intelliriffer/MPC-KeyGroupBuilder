@@ -134,7 +134,7 @@ function SaveSingleKeygroup(wav) {
     $i = $i.replace('##HIGH##', wav.HI);
     $i = $i.replace('##CENTS##', wav.CENTS);
     $i = $i.replace('##DOLOOP##', 1);
-    $i = $i.replace('##END##',);
+    $i = $i.replace('##END##', $END);
     $i = $i.replace('##ROOT##', wav.ROOT);
     $i = $i.replace('##SAMPLE##', wav.SAMPLE);
 
