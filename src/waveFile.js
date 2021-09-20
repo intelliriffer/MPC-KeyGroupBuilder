@@ -109,11 +109,9 @@ exports.createAkaiChunk = function (START, END, LOOPSTART, LOOPMODE = 1) {
 }
 
 exports.createSMPLChunk = function (ROOT, CENTS, LOOPSTART, LOOPEND) {
-    if (CENTS < 0) {
-        ROOT -= 1;
-        CENTS += 100;
-    }
-    CENTS /= 100;
+    ROOT -= 1;
+    CENTS = 0; //kill cents as force does not seem to read them anyway. files will be off by upto a semitone.
+
     let chunk = {
         HEADER: [0x73, 0x6D, 0x70, 0x6C],
         SIZE: [0x3C, 0x00, 0x00, 0x00],
@@ -121,7 +119,7 @@ exports.createSMPLChunk = function (ROOT, CENTS, LOOPSTART, LOOPEND) {
         PRODUCT: toBytes(0),
         PERIOD: toBytes(0),
         MIDINOTE: toBytes(ROOT),
-        MIDICENTS: fractionToBytes(CENTS),
+        MIDICENTS: centsToFractionsAsBytes(CENTS),
         SMPTE: toBytes(0),
         SMPTEOFFSET: toBytes(0),
         NUMLOOPS: toBytes(1),
@@ -133,15 +131,14 @@ exports.createSMPLChunk = function (ROOT, CENTS, LOOPSTART, LOOPEND) {
         FRACTION: toBytes(0),
         PLAYCOUNT: toBytes(0), //infinite
     }
+
     let payload = [];
     Object.keys(chunk).forEach(e => { payload = payload.concat(chunk[e]); });
     return payload;
 
 }
 
-function fractionToBytes($v) {
-    return parseInt(($v).toString(16).split(".")[1].slice(-8), 16).toString(2).padStart(32, "0").match(/[0|1]{8}/g).reverse().map(b => parseInt(b, 2));
-}
+
 
 function wavInfo($fb, getData = true) {
 
@@ -239,7 +236,7 @@ function getSMPL($fb, $pos) {
         PRODUCT: getSum($fb, $pos + 0x0C, 4),
         PERIOD: getSum($fb, $pos + 0x10, 4),
         MIDINOTE: getSum($fb, $pos + 0x14, 4),
-        MIDICENTS: getSum($fb, $pos + 0x18, 4),
+        MIDICENTS: bytesToCents(Array.from($fb.slice($pos + 0x18, $pos + 0x18 + 4))),//   getSum($fb, $pos + 0x18, 4),
         SMPTE: getSum($fb, $pos + 0x1C, 4),
         SMPTEOFFSET: getSum($fb, $pos + 0x20, 4),
         NUMLOOPS: getSum($fb, $pos + 0x24, 4),
@@ -303,4 +300,26 @@ function getSum($data, start, length) {
 function toBytes(v, len = 4) {
     let data = v.toString(2).padStart(32, "0").match(/[0|1]{8}/g).reverse().map(b => parseInt(b, 2));
     return data.slice(0, len);
+}
+
+
+function bytesToCents(bs) {
+    let hs = parseInt(bs.map(v => v.toString(16).padStart(2, 0)).join(''), 16);
+    return toCents(hs);
+}
+
+function toCents(v) {
+    return Math.round(v * (1.00 / 2 ** 32) * 100);
+}
+
+function centsToFraction(cents) {
+    cents = cents / 100;
+
+    return Math.round(cents * (2 ** 32));
+}
+function centsToFractionsAsBytes(cents) {
+    if (cents > 99) cents = 99;
+    let i = centsToFraction(cents);
+    return toBytes(i).reverse();
+
 }

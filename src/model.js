@@ -226,9 +226,9 @@ processWavs = function ($path, $mode) {
         if (MODEL.MODES[$mode].SINGLECYCLE) {
             let P = getPitch(WINFO.numsamples, WINFO.samplerate);
             if (P.ROOT < 0 || P.ROOT > 127) {
-
                 log('ERROR', `      >>> ${wFile} >>> Sample too long to be Single Cycle, Could not determine Root, defaulting to C1 >>>`);
                 P.ROOT = 12;
+                P.CENTS = 0;
             }
             root = P.ROOT + 1;
             $CENTS = P.CENTS;
