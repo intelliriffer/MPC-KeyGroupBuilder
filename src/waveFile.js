@@ -168,8 +168,7 @@ function wavInfo($fb, getData = true) {
     $sampleend = $datasize / ($channels * ($depth / 8));
 
     let wavdata = $fb.slice($datapos + 8, $datapos + $datasize + 8);
-    $smplpos = $fb.findString('smpl', $fmtpos);
-    $akai = $fb.findString('atem', $fmtpos);
+
     let $smpls = {};
     $o = {
         numsamples: $sampleend,
@@ -185,17 +184,27 @@ function wavInfo($fb, getData = true) {
         SMPL: $smpls
 
     };
+    $smplpos = $akai = 0;
+    $start = $fb.toString().indexOf('smpl');
+    if ($start >= 0) {
+        $smplpos = $fb.findString('smpl', $start);
+    }
 
+    $start = $fb.toString().indexOf('atem');
+    if ($start >= 0) {
+        $akai = $fb.findString('atem', $start);
+    }
 
     if ($smplpos > 0) {
+        //console.log('smpl chunk found');
         $o.hasSMPL = true;
         $o.SMPL = getSMPL($fb, $smplpos);
     }
     if ($akai > 0) {
+        //console.log('akai chunk found');
         $o.isAkai = true;
         let jLen = getSum($fb, $akai + 4, 4);
         let jData = $fb.slice($akai + 8, $akai + 8 + jLen).toString().trim().replace(/\0$/, "");
-
         // $o.AKAI = JSON.parse(jData);
     }
 
@@ -243,9 +252,9 @@ function getSMPL($fb, $pos) {
 
 
 function isSerum($data) {
-
-    let serumpos = $data.findString("clm ", this.$fmtpos + 16);
-
+    let $start = $data.toString().indexOf('clm');
+    if ($start == -1) return;
+    let serumpos = $data.findString("clm ", $start);
     if (serumpos) {
         let da = Array.from($data.slice(serumpos + 11, serumpos + 15));
         return (parseInt(da.map(v => String.fromCharCode(v)).join('')));
@@ -265,7 +274,7 @@ function byteSum(bytes) {
 }
 
 Buffer.prototype.findString = function (s, start = 0) {
-
+    if (start == -1) return -1;
     let b = this.slice(start);
     let sA = s.split('').map(v => v.charCodeAt(0));
 

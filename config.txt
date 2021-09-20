@@ -29,3 +29,4 @@
 
 #enter the conversion commands below this line (each line for a different folder and command)
 
+SINGLES /Volumes/EX3/my.force/converts/singles
