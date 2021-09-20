@@ -11,7 +11,7 @@ const helpers = require('./helpers');
 const model = require('./model');
 const execSync = require('child_process').execSync;
 const $config = path.join(__dirname, "../config.txt");
-if (!isFile($config)) throw (ANSI.ERROR('Error! ==> Config.txt Not Found!!'));
+if (!isFile($config)) ANSI.XERROR('Error! ==> Config.txt Not Found!!');
 let fdata = fs.readFileSync($config).toString();
 let files = fdata.split("\n").filter(v => { return v.trim() != '' && !v.trim().startsWith('#') });
 let options = /#OPTIONS (.*)/.exec(fdata);
@@ -37,8 +37,8 @@ function validateConfig($data) {
         let chunks = $data[i].trim().split(" ");
         let mode = chunks.shift().trim();
         let folder = chunks.join(' ');
-        if (!isDir(folder)) throw (ANSI.ERROR(`ERROR ***** Line ${i + 1} ,  Folder ${clean(folder)} Does not Exist!`));
-        if (!model.isValidMode(mode)) throw (ANSI.ERROR(`ERROR ***** Line ${i + 1} ,  Invalid Mode [${mode}] , Expected one of the following ( ${model.ModeList().join(",")} )`));
+        if (!isDir(folder)) ANSI.XTHROW(`ERROR in Config.txt ***** Line ${i + 1} ,  Folder ${clean(folder)} Does not Exist!`);
+        if (!model.isValidMode(mode)) ANSI.XTHROW(`ERROR in Config.txt ***** Line ${i + 1} ,  Invalid Mode [${mode}] , Expected one of the following ( ${model.ModeList().join(", ")} )`);
         if (!isRecursive(folder)) {
             let ITEM = {
                 FOLDER: clean(folder),

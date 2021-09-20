@@ -165,9 +165,6 @@ function resetInstrument($i) {
 }
 
 
-
-
-
 function log(COLOR, what) {
     console.log(ANSI[COLOR](what));
 }

@@ -35,7 +35,7 @@ let ANSI = {
 }
 
 module.exports = {
-    ANSI, wrap, ERROR, GREEN, YELLOW, CYAN, BLUE
+    ANSI, XTHROW, wrap, ERROR, GREEN, YELLOW, CYAN, BLUE
 
 }
 
@@ -59,4 +59,8 @@ function CYAN($data) {
 }
 function BLUE($data) {
     return wrap('FgBlue', $data);
+}
+function XTHROW($msg = '') {
+    console.log(ERROR($msg));
+    process.exit();
 }
