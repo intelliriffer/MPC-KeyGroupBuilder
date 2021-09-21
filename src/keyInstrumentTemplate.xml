@@ -58,7 +58,7 @@
         <Layers>
           <Layer number="1">
             <Active>True</Active>
-            <Volume>1.000000</Volume>
+            <Volume>##VOLUME##</Volume>
             <Pan>0.500000</Pan>
             <Pitch>0.000000</Pitch>
             <TuneCoarse>0</TuneCoarse>
@@ -88,7 +88,7 @@
           </Layer>
           <Layer number="2">
             <Active>True</Active>
-            <Volume>1.000000</Volume>
+            <Volume>##VOLUME##</Volume>
             <Pan>0.500000</Pan>
             <Pitch>0.000000</Pitch>
             <TuneCoarse>0</TuneCoarse>
@@ -118,7 +118,7 @@
           </Layer>
           <Layer number="3">
             <Active>True</Active>
-            <Volume>1.000000</Volume>
+            <Volume>##VOLUME##</Volume>
             <Pan>0.500000</Pan>
             <Pitch>0.000000</Pitch>
             <TuneCoarse>0</TuneCoarse>
@@ -148,7 +148,7 @@
           </Layer>
           <Layer number="4">
             <Active>True</Active>
-            <Volume>1.000000</Volume>
+            <Volume>##VOLUME##</Volume>
             <Pan>0.500000</Pan>
             <Pitch>0.000000</Pitch>
             <TuneCoarse>0</TuneCoarse>

@@ -15,13 +15,15 @@ const MODEL = {
         ID: 0,
         LOW: 0,
         HIGH: 127,
-        LOOPSTART: 0
+        LOOPSTART: 0,
+        VOLUME: '1.000000'
 
 
     },
     OPTIONS: {
         SCW_WRITE_SMPL_CHUNK: false,
-        PREFER_WAV_EMBEDDED_ROOT: false
+        PREFER_WAV_EMBEDDED_ROOT: false,
+        SCW_HALF_VOLUME: false,
 
     }
     ,
@@ -123,7 +125,7 @@ function SaveMultisampleKeygroup(wData) {
 
 
 }
-function SaveSingleKeygroup(wav) {
+function SaveSingleKeygroup(wav, $mode) {
     let ID = 1;
     let $i = MODEL.TEMPLATES.INSTRUMENT;
     let $END = wav.WINFO.numsamples - 1;
@@ -139,6 +141,8 @@ function SaveSingleKeygroup(wav) {
     $i = $i.replace('##END##', $END);
     $i = $i.replace('##ROOT##', wav.ROOT);
     $i = $i.replace('##SAMPLE##', wav.SAMPLE);
+    $i = $i.replaceAll('##VOLUME##', getVolume($mode));
+
 
     $i = resetInstrument($i);
     for (let i = 2; i <= 128; i++) {
@@ -158,9 +162,17 @@ function SaveSingleKeygroup(wav) {
 
 }
 
+function getVolume($mode) {
+    let volume = MODEL.DEFAULTS.VOLUME;
+    if (MODEL.OPTIONS.SCW_HALF_VOLUME && MODEL.MODES[$mode].SINGLECYCLE) {
+        volume = '0.500000';
+    }
+    return volume;
+}
+
 function resetInstrument($i) {
     Object.keys(MODEL.DEFAULTS).forEach(v => {
-        $i = $i.replace(`##${v}##`, MODEL.DEFAULTS[v]);
+        $i = $i.replaceAll(`##${v}##`, MODEL.DEFAULTS[v]);
     });
     return $i;
 
@@ -262,7 +274,7 @@ processWavs = function ($path, $mode) {
             MULTI: false,
         }
         wav.WINFO = WINFO;
-        SaveSingleKeygroup(wav);
+        SaveSingleKeygroup(wav, $mode);
 
     });
 
