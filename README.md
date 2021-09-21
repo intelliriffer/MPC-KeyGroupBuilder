@@ -49,9 +49,22 @@
 > It is up to you to organize and provide correct names / pitches for your samples.  
 > The Same Naming Convention Rule Apply of SINGLES, just that the folder will contain different Samples each resulting in a new key-group file.
 > &nbsp;  
-> If the filename does not contain pitch infomation, but the wav file has that embedded in it, it will try to use that. You can force it to always use embedded by adding PREFER_WAV_EMBEDDED_ROOT to the line starting with #OPTIONS in the config.txt file.
+> If the filename does not contain pitch information, but the wav file has that embedded in it, it will try to use that. You can force it to always use embedded by adding PREFER_WAV_EMBEDDED_ROOT to the line starting with #OPTIONS in the config.txt file.
 
 
+## *** Global Options ***
+    The Global Options are added in config.txt on the line starting with #OPTIONS with a space between various options.    
+
+    The Current Options are as Listed Below:    
+
+    1. SCW_WRITE_SMPL_CHUNK  
+    Will generate a SMPL meta info and Akai atemp meta chunk and will add it to SCW wav file. SMPL chunk contains Pitch as well as sample loop point.  
+
+    2. PREFER_WAV_EMBEDDED_ROOT  
+    Will ignore the note number specified in file name and use the value embedded in the wav file SMPL chunk (useful when samples are coming from another sampler or sound-font) Does not Apply to SCW.  
+
+    3. SCW_HALF_VOLUME  
+    Usually SCW are normalized so the Key-group can get very loud compared to everything else. This Options set the Volume to around half.
 
 
 ##  Usage/ Instructions
